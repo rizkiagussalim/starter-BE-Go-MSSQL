@@ -67,7 +67,7 @@ func version(w http.ResponseWriter, r *http.Request) {
 func greet(w http.ResponseWriter, r *http.Request) {
 	name := strings.Trim(r.URL.Path, "/")
 	if name == "" {
-		name = "Gopher"
+		name = "Agus"
 	}
 
 	fmt.Fprintf(w, "<!DOCTYPE html>\n")
