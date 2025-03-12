@@ -6,8 +6,9 @@
   # Use https://search.nixos.org/packages to find packages
   packages = [
     pkgs.go
-    pkgs.nodejs_20
+    pkgs.nodejs_20 # mungkin nanti ini dihapus
     pkgs.nodePackages.nodemon
+    pkgs.tree
   ];
   # Sets environment variables in the workspace
   env = {};
@@ -24,20 +25,20 @@
       };
     };
     # Enable previews and customize configuration
-    previews = {
-      enable = true;
-      previews = {
-        web = {
-          command = [
-            "nodemon"
-            "--signal" "SIGHUP"
-            "-w" "."
-            "-e" "go,html"
-            "-x" "go run main.go -addr localhost:$PORT"
-          ];
-          manager = "web";
-        };
-      };
-    };
+    # previews = {
+    #   enable = true;
+    #   previews = {
+    #     web = {
+    #       command = [
+    #         "nodemon"
+    #         "--signal" "SIGHUP"
+    #         "-w" "."
+    #         "-e" "go,html"
+    #         "-x" "go run main.go -addr localhost:$PORT"
+    #       ];
+    #       manager = "web";
+    #     };
+    #   };
+    # };
   };
 }
