@@ -15,11 +15,12 @@
     # Search for the extensions you want on https://open-vsx.org/ and use "publisher.id"
     extensions = [
       "golang.go"
+      "humao.rest-client"
     ];
     workspace = {
       onCreate = {
         # Open editors for the following files by default, if they exist:
-        default.openFiles = ["server.go"];
+        default.openFiles = ["main.go"];
       };
     };
     # Enable previews and customize configuration
@@ -32,7 +33,7 @@
             "--signal" "SIGHUP"
             "-w" "."
             "-e" "go,html"
-            "-x" "go run server.go -addr localhost:$PORT"
+            "-x" "go run main.go -addr localhost:$PORT"
           ];
           manager = "web";
         };
