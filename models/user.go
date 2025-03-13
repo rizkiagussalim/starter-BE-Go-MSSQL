@@ -19,32 +19,31 @@ type User struct {
 }
 
 func CreateUser(db *sql.DB) gin.HandlerFunc {
-	return func(c *gin.Context) {
-		var user User
-		if err := c.ShouldBindJSON(&user); err != nil {
-			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-			return
-		}
+    return func(c *gin.Context) {
+        var user User
+        if err := c.ShouldBindJSON(&user); err != nil {
+            c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+            return
+        }
 
-		user.CreatedAt = time.Now()
-		user.UpdatedAt = time.Now()
+        user.CreatedAt = time.Now()
+        user.UpdatedAt = time.Now()
 
-		query := `INSERT INTO Haus_Inventory_System_Dev.dbo.[User] (password, sap_user_code, created_at, updated_at) VALUES (@password, @sap_user_code, @created_at, @updated_at)`
-		result, err := db.Exec(query, sql.Named("password", user.Password), sql.Named("sap_user_code", user.SapUserCode), sql.Named("created_at", user.CreatedAt), sql.Named("updated_at", user.UpdatedAt))
-		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-			return
-		}
+        query := `
+            INSERT INTO Haus_Inventory_System_Dev.dbo.[User] (password, sap_user_code, created_at, updated_at)
+            VALUES (@password, @sap_user_code, @created_at, @updated_at);
+            SELECT ID = convert(bigint, SCOPE_IDENTITY());
+        `
+        var id int64
+        err := db.QueryRow(query, sql.Named("password", user.Password), sql.Named("sap_user_code", user.SapUserCode), sql.Named("created_at", user.CreatedAt), sql.Named("updated_at", user.UpdatedAt)).Scan(&id)
+        if err != nil {
+            c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+            return
+        }
 
-		id, err := result.LastInsertId()
-		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-			return
-		}
-
-		user.ID = int(id)
-		c.JSON(http.StatusCreated, user)
-	}
+        user.ID = int(id)
+        c.JSON(http.StatusCreated, user)
+    }
 }
 
 func GetUsers(db *sql.DB) gin.HandlerFunc {

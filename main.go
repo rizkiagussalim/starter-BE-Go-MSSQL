@@ -35,11 +35,50 @@ func main() {
 	r := gin.Default()
 
 	// Define routes
-	r.POST("/users", models.CreateUser(db))
-	r.GET("/users", models.GetUsers(db))
-	r.GET("/users/:id", models.GetUser(db))
-	r.PUT("/users/:id", models.UpdateUser(db))
-	r.DELETE("/users/:id", models.DeleteUser(db))
+	r.POST("/users", models.CreateUser(db)) // ✅ Success
+		// HTTP/1.1 500 Internal Server Error
+		// Content-Type: application/json; charset=utf-8
+		// Date: Thu, 13 Mar 2025 10:36:20 GMT
+		// Content-Length: 151
+		// Connection: close
+		//
+		// {
+		// "error": "LastInsertId is not supported. Please use the OUTPUT clause or add `select ID = convert(bigint, SCOPE_IDENTITY())` to the end of your query"
+		// }
+	r.GET("/users", models.GetUsers(db)) // error
+		// HTTP/1.1 500 Internal Server Error
+		// Content-Type: application/json; charset=utf-8
+		// Date: Thu, 13 Mar 2025 10:43:15 GMT
+		// Content-Length: 148
+		// Connection: close
+		//
+		// {
+		// "error": "sql: Scan error on column index 4, name \"updated_at\": unsupported Scan, storing driver.Value type \u003cnil\u003e into type *time.Time"
+		// }
+	r.GET("/users/:id", models.GetUser(db)) // error
+		// HTTP/1.1 500 Internal Server Error
+		// Content-Type: application/json; charset=utf-8
+		// Date: Thu, 13 Mar 2025 10:45:56 GMT
+		// Content-Length: 148
+		// Connection: close
+		//
+		// {
+		// "error": "sql: Scan error on column index 4, name \"updated_at\": unsupported Scan, storing driver.Value type \u003cnil\u003e into type *time.Time"
+		// }
+	r.PUT("/users/:id", models.UpdateUser(db)) // ✅ Success
+		// HTTP/1.1 200 OK
+		// Content-Type: application/json; charset=utf-8
+		// Date: Thu, 13 Mar 2025 10:39:33 GMT
+		// Content-Length: 39
+		// Connection: close
+		//
+		// {
+		// "message": "User updated successfully"
+		// }
+	r.DELETE("/users/:id", models.DeleteUser(db)) // ✅ Success
+		// {
+		// 	"message": "User deleted successfully"
+		// }
 
 	// Start server
 	log.Println("Server is running on port 8080")
