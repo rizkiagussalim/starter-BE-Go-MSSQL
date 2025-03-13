@@ -6,8 +6,8 @@
   # Use https://search.nixos.org/packages to find packages
   packages = [
     pkgs.go
-    pkgs.nodejs_20 # mungkin nanti ini dihapus
-    pkgs.nodePackages.nodemon
+    # pkgs.nodejs_20 # mungkin nanti ini dihapus
+    # pkgs.nodePackages.nodemon
     pkgs.tree
   ];
   # Sets environment variables in the workspace
