@@ -21,7 +21,12 @@
     workspace = {
       onCreate = {
         # Open editors for the following files by default, if they exist:
-        default.openFiles = ["main.go"];
+        default.openFiles = [
+          "README.md"
+          "test-api.http"
+          "main.go"
+          "models/user.go"
+        ];
       };
     };
     # Enable previews and customize configuration
