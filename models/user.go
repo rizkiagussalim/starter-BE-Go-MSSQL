@@ -14,7 +14,7 @@ type User struct {
 	Password     string    `json:"password"`
 	SapUserCode  string    `json:"sap_user_code"`
 	CreatedAt    time.Time `json:"created_at"`
-	UpdatedAt    time.Time `json:"updated_at"`
+	UpdatedAt    sql.NullTime `json:"updated_at"`
 	DeletedAt    sql.NullTime `json:"deleted_at"`
 }
 
@@ -103,7 +103,8 @@ func UpdateUser(db *sql.DB) gin.HandlerFunc {
 			return
 		}
 
-		user.UpdatedAt = time.Now()
+		// user.UpdatedAt = time.Now()
+		user.UpdatedAt = sql.NullTime{Time: time.Now(), Valid: true}
 
 		query := `UPDATE Haus_Inventory_System_Dev.dbo.[User] SET password = @password, sap_user_code = @sap_user_code, updated_at = @updated_at WHERE id = @id AND deleted_at IS NULL`
 		result, err := db.Exec(query, sql.Named("password", user.Password), sql.Named("sap_user_code", user.SapUserCode), sql.Named("updated_at", user.UpdatedAt), sql.Named("id", id))
