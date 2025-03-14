@@ -36,15 +36,23 @@ func main() {
 
 	// Define routes
 	r.POST("/users", models.CreateUser(db)) // ✅ Success
-		// HTTP/1.1 500 Internal Server Error
+		// HTTP/1.1 201 Created
 		// Content-Type: application/json; charset=utf-8
-		// Date: Thu, 13 Mar 2025 10:36:20 GMT
-		// Content-Length: 151
+		// Date: Fri, 14 Mar 2025 03:02:47 GMT
+		// Content-Length: 209
 		// Connection: close
 		//
 		// {
-		// "error": "LastInsertId is not supported. Please use the OUTPUT clause or add `select ID = convert(bigint, SCOPE_IDENTITY())` to the end of your query"
-		// }
+		//   "id": 17,
+		//   "password": "hashed_password_1235",
+		//   "sap_user_code": "SAP012",
+		//   "created_at": "2025-03-14T03:02:47.077073006Z",
+		//   "updated_at": "0001-01-01T00:00:00Z",
+		//   "deleted_at": {
+		// 	"Time": "0001-01-01T00:00:00Z",
+		// 	"Valid": false
+		//   }
+		// }	
 	r.GET("/users", models.GetUsers(db)) // error
 		// HTTP/1.1 500 Internal Server Error
 		// Content-Type: application/json; charset=utf-8

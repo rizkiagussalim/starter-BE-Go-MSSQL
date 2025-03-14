@@ -15,7 +15,7 @@ type User struct {
 	SapUserCode  string    `json:"sap_user_code"`
 	CreatedAt    time.Time `json:"created_at"`
 	UpdatedAt    time.Time `json:"updated_at"`
-	DeletedAt    *time.Time `json:"deleted_at,omitempty"`
+	DeletedAt    sql.NullTime `json:"deleted_at"`
 }
 
 func CreateUser(db *sql.DB) gin.HandlerFunc {
@@ -27,15 +27,15 @@ func CreateUser(db *sql.DB) gin.HandlerFunc {
         }
 
         user.CreatedAt = time.Now()
-        user.UpdatedAt = time.Now()
+        // user.UpdatedAt = time.Now()
 
         query := `
-            INSERT INTO Haus_Inventory_System_Dev.dbo.[User] (password, sap_user_code, created_at, updated_at)
-            VALUES (@password, @sap_user_code, @created_at, @updated_at);
+            INSERT INTO Haus_Inventory_System_Dev.dbo.[User] (password, sap_user_code, created_at)
+            VALUES (@password, @sap_user_code, @created_at);
             SELECT ID = convert(bigint, SCOPE_IDENTITY());
         `
         var id int64
-        err := db.QueryRow(query, sql.Named("password", user.Password), sql.Named("sap_user_code", user.SapUserCode), sql.Named("created_at", user.CreatedAt), sql.Named("updated_at", user.UpdatedAt)).Scan(&id)
+        err := db.QueryRow(query, sql.Named("password", user.Password), sql.Named("sap_user_code", user.SapUserCode), sql.Named("created_at", user.CreatedAt)).Scan(&id)
         if err != nil {
             c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
             return
