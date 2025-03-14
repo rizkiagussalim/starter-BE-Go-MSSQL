@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"try-go/utils"
 )
 
 type User struct {
@@ -26,7 +27,8 @@ func CreateUser(db *sql.DB) gin.HandlerFunc {
             return
         }
 
-        user.CreatedAt = time.Now()
+        user.CreatedAt = utils.GetCurrentTimeInJakarta()
+        // user.CreatedAt = time.Now()
         // user.UpdatedAt = time.Now()
 
         query := `
@@ -104,7 +106,8 @@ func UpdateUser(db *sql.DB) gin.HandlerFunc {
 		}
 
 		// user.UpdatedAt = time.Now()
-		user.UpdatedAt = sql.NullTime{Time: time.Now(), Valid: true}
+		// user.UpdatedAt = sql.NullTime{Time: time.Now(), Valid: true}
+		user.UpdatedAt = sql.NullTime{Time: utils.GetCurrentTimeInJakarta(), Valid: true}
 
 		query := `UPDATE Haus_Inventory_System_Dev.dbo.[User] SET password = @password, sap_user_code = @sap_user_code, updated_at = @updated_at WHERE id = @id AND deleted_at IS NULL`
 		result, err := db.Exec(query, sql.Named("password", user.Password), sql.Named("sap_user_code", user.SapUserCode), sql.Named("updated_at", user.UpdatedAt), sql.Named("id", id))
@@ -131,7 +134,8 @@ func UpdateUser(db *sql.DB) gin.HandlerFunc {
 func DeleteUser(db *sql.DB) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		id := c.Param("id")
-		deletedAt := time.Now()
+		// deletedAt := time.Now()
+		deletedAt := utils.GetCurrentTimeInJakarta()
 
 		query := `UPDATE Haus_Inventory_System_Dev.dbo.[User] SET deleted_at = @deleted_at WHERE id = @id AND deleted_at IS NULL`
 		result, err := db.Exec(query, sql.Named("deleted_at", deletedAt), sql.Named("id", id))

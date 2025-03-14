@@ -1,6 +1,7 @@
-This is a simple CRUD SQL Server demonstration web server.
+This is a simple CRUD SQL Server Back End.
 
 Run project:
 go run main.go
 
-curl http://localhost:8080/
+Test API:
+Open the test-api.htp file
