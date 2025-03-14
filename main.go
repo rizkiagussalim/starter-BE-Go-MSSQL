@@ -35,58 +35,11 @@ func main() {
 	r := gin.Default()
 
 	// Define routes
-	r.POST("/users", models.CreateUser(db)) // ✅ Success
-		// HTTP/1.1 201 Created
-		// Content-Type: application/json; charset=utf-8
-		// Date: Fri, 14 Mar 2025 03:02:47 GMT
-		// Content-Length: 209
-		// Connection: close
-		//
-		// {
-		//   "id": 17,
-		//   "password": "hashed_password_1235",
-		//   "sap_user_code": "SAP012",
-		//   "created_at": "2025-03-14T03:02:47.077073006Z",
-		//   "updated_at": "0001-01-01T00:00:00Z",
-		//   "deleted_at": {
-		// 	"Time": "0001-01-01T00:00:00Z",
-		// 	"Valid": false
-		//   }
-		// }	
-	r.GET("/users", models.GetUsers(db)) // error
-		// HTTP/1.1 500 Internal Server Error
-		// Content-Type: application/json; charset=utf-8
-		// Date: Thu, 13 Mar 2025 10:43:15 GMT
-		// Content-Length: 148
-		// Connection: close
-		//
-		// {
-		// "error": "sql: Scan error on column index 4, name \"updated_at\": unsupported Scan, storing driver.Value type \u003cnil\u003e into type *time.Time"
-		// }
-	r.GET("/users/:id", models.GetUser(db)) // error
-		// HTTP/1.1 500 Internal Server Error
-		// Content-Type: application/json; charset=utf-8
-		// Date: Thu, 13 Mar 2025 10:45:56 GMT
-		// Content-Length: 148
-		// Connection: close
-		//
-		// {
-		// "error": "sql: Scan error on column index 4, name \"updated_at\": unsupported Scan, storing driver.Value type \u003cnil\u003e into type *time.Time"
-		// }
+	r.POST("/users", models.CreateUser(db)) // ✅ Success	
+	r.GET("/users", models.GetUsers(db)) // ✅ Success
+	r.GET("/users/:id", models.GetUser(db)) // ✅ Success
 	r.PUT("/users/:id", models.UpdateUser(db)) // ✅ Success
-		// HTTP/1.1 200 OK
-		// Content-Type: application/json; charset=utf-8
-		// Date: Thu, 13 Mar 2025 10:39:33 GMT
-		// Content-Length: 39
-		// Connection: close
-		//
-		// {
-		// "message": "User updated successfully"
-		// }
 	r.DELETE("/users/:id", models.DeleteUser(db)) // ✅ Success
-		// {
-		// 	"message": "User deleted successfully"
-		// }
 
 	// Start server
 	log.Println("Server is running on port 8080")
