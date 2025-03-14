@@ -1,6 +1,4 @@
-This is a simple hello, world demonstration web server.
-
-It serves version information on /version and answers any other request like /name by saying "Hello, name!".
+This is a simple CRUD SQL Server demonstration web server.
 
 Run project:
 go run main.go
