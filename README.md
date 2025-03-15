@@ -4,4 +4,4 @@ Run project:
 go run main.go
 
 Test API:
-Open the test-api.htp file
+Open the test-api.http file
