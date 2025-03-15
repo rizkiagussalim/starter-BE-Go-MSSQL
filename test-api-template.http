@@ -1,0 +1,21 @@
+POST http://localhost:8080/users
+Content-Type: application/json
+
+{
+  "password": "hashed_password_123",
+  "sap_user_code": "SAP001"
+}
+###
+GET http://localhost:8080/users
+###
+GET http://localhost:8080/users/1
+###
+PUT http://localhost:8080/users/2
+Content-Type: application/json
+
+{
+  "password": "new_hashed_password",
+  "sap_user_code": "SAP003"
+}
+###
+DELETE http://localhost:8080/users/2
