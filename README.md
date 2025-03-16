@@ -1,4 +1,4 @@
-# This is a simple CRUD Back End using Go & SQL Server and Project IDX ready.
+# This is a simple CRUD Back End using Go & SQL Server that is Project IDX ready
 
 ## Steps to setup:
 
